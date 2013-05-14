@@ -1,0 +1,31 @@
+{
+    "manifest_version": 2,
+    "name": "Байрон",
+    "description": "This extension demonstrates a browser action with kittens.",
+    "version": "1.0",
+
+    "permissions": [
+	"http://ngs.ru/",
+	"http://ngs24.ru/",
+	"http://news.ngs.ru/",
+	"http://news.ngs24.ru/"
+    ],
+
+    "browser_action": {},
+
+    "content_scripts": [
+	{
+	    "matches": [
+		"http://ngs.ru/",
+		"http://news.ngs.ru/*",
+		"http://ngs24.ru/",
+		"http://news.ngs24.ru/*"
+	    ],
+	    "js": ["jquery.js", "replacer.js"]
+	}
+    ],
+    
+    "web_accessible_resources": [
+	"titles.txt"
+    ]
+}

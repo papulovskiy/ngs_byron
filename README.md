@@ -1,0 +1,1 @@
+Simple funny extension that changes news titles to strings from poems.
