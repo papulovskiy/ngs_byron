@@ -16,7 +16,7 @@ $.get(chrome.extension.getURL('titles.txt'), function(data) {
 
 	// главная 
 	if (jQuery.inArray(document.location.href, ['http://ngs.ru/', 'http://www.ngs.ru/', 'http://ngs24.ru/', 'http://www.ngs24.ru/']) > -1) {
-	    pattern = "table.article h3 > a";
+	    pattern = "table.article h3 > a:not([class])";
 	}
 
 	// главная новостей
