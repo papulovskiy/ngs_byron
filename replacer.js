@@ -10,13 +10,15 @@ $.get(chrome.extension.getURL('titles.txt'), function(data) {
 var saves = [];
 function replace() {
     if (document.location.href.match('/more/')) {
-	$("div.news_article_content > h1").each(function() {
-	    saves.push($(this).text());
-	    var text = titles[Math.floor(Math.random() * (titlesCount)) + 1];
-	    $(this).fadeOut(400, function() {
-		$(this).text(text);
-		$(this).fadeIn();
+	if ($("div.news_article_content > div > b").length > 0) {
+	    $("div.news_article_content > h1").each(function() {
+		saves.push($(this).text());
+		var text = titles[Math.floor(Math.random() * (titlesCount)) + 1];
+		$(this).fadeOut(400, function() {
+		    $(this).text(text);
+		    $(this).fadeIn();
+		});
 	    });
-	});
+	}
     }
 }
