@@ -15,21 +15,20 @@ $.get(chrome.extension.getURL('titles.txt'), function(data) {
 	}
 
 	// главная 
-	if (jQuery.inArray(document.location.href, ['http://ngs.ru', 'http://www.ngs.ru/', 'http://ngs24.ru', 'http://www.ngs24.ru']) > -1) {
+	if (jQuery.inArray(document.location.href, ['http://ngs.ru/', 'http://www.ngs.ru/', 'http://ngs24.ru/', 'http://www.ngs24.ru/']) > -1) {
 	    pattern = "table.article h3 > a";
 	}
 
 	// главная новостей
-	if (jQuery.inArray(document.location.href, ['http://news.ngs.ru', 'http://www.news.ngs.ru/', 'http://news.ngs24.ru', 'http://www.news.ngs24.ru']) > -1) {
+	if (jQuery.inArray(document.location.href, ['http://news.ngs.ru/', 'http://www.news.ngs.ru/', 'http://news.ngs24.ru/', 'http://www.news.ngs24.ru/']) > -1) {
 	    pattern = ["div.day_block > a > h2", "div.other_articles > a > h2"];
 	}
 	
-	// комментарии
-//	if (document.location.href.match('/more/') && $("div.news_article_content > div > b").length > 0) {
-//	}
-	
-	
 	// список статей
+	if (document.location.href.match('/articles')) {
+	    pattern = "td.home_article > h2 > a";
+	}
+	
 	if( typeof pattern === 'string' ) {
 	    replace(pattern, title);
 	} else {
