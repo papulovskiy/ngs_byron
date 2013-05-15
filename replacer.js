@@ -4,8 +4,11 @@ var titlesCount = 0;
 $.get(chrome.extension.getURL('titles.txt'), function(data) {
     titles = data.split("\n");
     titlesCount = titles.length;
-    replace();
+    $(document).ready(function() {
+	replace();
+    });
 });
+
 
 var saves = [];
 function replace() {
@@ -15,6 +18,9 @@ function replace() {
 		saves.push($(this).text());
 		var text = titles[Math.floor(Math.random() * (titlesCount)) + 1];
 		$(this).fadeOut(400, function() {
+//		    document.title = text;
+		    setTimeout(function()  { if (document.title != text) { document.title = text; } }, 1000);
+		    $(document).attr('title', text);
 		    $(this).text(text);
 		    $(this).fadeIn();
 		});
