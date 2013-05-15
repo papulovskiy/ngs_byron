@@ -10,8 +10,10 @@
 	"http://news.ngs.ru/",
 	"http://news.ngs24.ru/"
     ],
-
-    "browser_action": {},
+	"icons": { "16": "byron-extension-16.png",
+           "48": "byron-extension-48.png",
+          "128": "byron-extension-128.png" },
+    "browser_action": {"default_icon": "byron-extension-19.png"},
 
     "content_scripts": [
 	{
