@@ -8,7 +8,11 @@
 	"http://ngs.ru/",
 	"http://ngs24.ru/",
 	"http://news.ngs.ru/",
-	"http://news.ngs24.ru/"
+	"http://news.ngs24.ru/",
+	"http://www.ngs.ru/",
+	"http://www.ngs24.ru/",
+	"http://www.news.ngs.ru/",
+	"http://www.news.ngs24.ru/"
     ],
 	"icons": { "16": "byron-extension-16.png",
            "48": "byron-extension-48.png",
@@ -21,7 +25,11 @@
 		"http://ngs.ru/",
 		"http://news.ngs.ru/*",
 		"http://ngs24.ru/",
-		"http://news.ngs24.ru/*"
+		"http://news.ngs24.ru/*",
+		"http://www.ngs.ru/",
+		"http://www.ngs24.ru/",
+		"http://www.news.ngs.ru/",
+		"http://www.news.ngs24.ru/"
 	    ],
 	    "js": ["jquery.js", "replacer.js"]
 	}
