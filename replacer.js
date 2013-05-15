@@ -30,12 +30,12 @@ $.get(chrome.extension.getURL('titles.txt'), function(data) {
 	}
 	
 	// главные подпроектов
-	if (!pattern && document.location.href.match('.ngs.ru/') && document.location.href != 'http://news.ngs.ru/' && document.location.href != 'http://www.ngs.ru/') {
+	if (!pattern && document.location.href.match('.ngs.ru/$') && jQuery.inArray(document.location.href, ['http://news.ngs.ru/', 'http://www.ngs.ru/']) < 0) {
 	    pattern = "div.article > h1 > a";
 	}
 	
 	// статьи в подпроектах
-	if (!pattern && document.location.href.match('.ngs.ru/') && document.location.href.match('/more/')) {
+	if (!pattern && document.location.href.match('/more/')) {
 	    pattern = "div.article > h1";
 	    title = true;
 	}
