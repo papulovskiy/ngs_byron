@@ -29,6 +29,19 @@ $.get(chrome.extension.getURL('titles.txt'), function(data) {
 	    pattern = "td.home_article > h2 > a";
 	}
 	
+	// главные подпроектов
+	if (document.location.href.match('.ngs.ru/') && document.location.href != 'http://news.ngs.ru/' && document.location.href != 'http://www.ngs.ru') {
+	    pattern = "div.article > h1 > a";
+	}
+	
+	// статьи в подпроектах
+	if (document.location.href.match('/news/more/')) {
+	    pattern = "div.article > h1";
+	    title = true;
+	}
+	
+//	console.log(pattern);
+	
 	if( typeof pattern === 'string' ) {
 	    replace(pattern, title);
 	} else {
