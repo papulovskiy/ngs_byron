@@ -53,5 +53,7 @@
     
     "web_accessible_resources": [
 	"titles.txt"
-    ]
+    ],
+    
+    "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
 }
