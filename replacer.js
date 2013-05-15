@@ -15,27 +15,27 @@ $.get(chrome.extension.getURL('titles.txt'), function(data) {
 	}
 
 	// главная 
-	if (jQuery.inArray(document.location.href, ['http://ngs.ru/', 'http://www.ngs.ru/', 'http://ngs24.ru/', 'http://www.ngs24.ru/']) > -1) {
+	if (!pattern && jQuery.inArray(document.location.href, ['http://ngs.ru/', 'http://www.ngs.ru/', 'http://ngs24.ru/', 'http://www.ngs24.ru/']) > -1) {
 	    pattern = "table.article h3 > a:not([class])";
 	}
 
 	// главная новостей
-	if (jQuery.inArray(document.location.href, ['http://news.ngs.ru/', 'http://www.news.ngs.ru/', 'http://news.ngs24.ru/', 'http://www.news.ngs24.ru/']) > -1) {
+	if (!pattern && jQuery.inArray(document.location.href, ['http://news.ngs.ru/', 'http://www.news.ngs.ru/', 'http://news.ngs24.ru/', 'http://www.news.ngs24.ru/']) > -1) {
 	    pattern = ["div.day_block > a > h2", "div.other_articles > a > h2"];
 	}
 	
 	// список статей
-	if (document.location.href.match('/articles')) {
+	if (!pattern && document.location.href.match('/articles')) {
 	    pattern = "td.home_article > h2 > a";
 	}
 	
 	// главные подпроектов
-	if (document.location.href.match('.ngs.ru/') && document.location.href != 'http://news.ngs.ru/' && document.location.href != 'http://www.ngs.ru') {
+	if (!pattern && document.location.href.match('.ngs.ru/') && document.location.href != 'http://news.ngs.ru/' && document.location.href != 'http://www.ngs.ru/') {
 	    pattern = "div.article > h1 > a";
 	}
 	
 	// статьи в подпроектах
-	if (document.location.href.match('.ngs.ru/') && document.location.href.match('/more/')) {
+	if (!pattern && document.location.href.match('.ngs.ru/') && document.location.href.match('/more/')) {
 	    pattern = "div.article > h1";
 	    title = true;
 	}
