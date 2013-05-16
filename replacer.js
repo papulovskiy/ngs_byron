@@ -66,8 +66,12 @@ function getPatternAndReplace(enabled) {
 	
 	console.log(pattern);
 	if (!pattern) {
+	    chrome.extension.sendMessage({command: 'disable'}, function(response) {
+	    });
 	    return;
 	}
+	chrome.extension.sendMessage({command: 'enable'}, function(response) {
+	});
 	
 	if( typeof pattern === 'string' ) {
 	    replace(pattern, title, enabled);
@@ -87,7 +91,7 @@ function replace(pattern, title, enabled) {
 	    if (enabled) {
 		saves.push($(this).text());
 		var text = defaultText;
-		while (!jQuery.inArray(text, used)) {
+		while (jQuery.inArray(text, used) > -1) {
 		    text = titles[Math.floor(Math.random() * (titlesCount)) + 1];
 		}
 	    } else {
