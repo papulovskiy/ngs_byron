@@ -3,7 +3,7 @@ var titlesCount = 0;
 
 chrome.runtime.onConnect.addListener(function(port) {
     port.onMessage.addListener(function(msg) {
-	port.postMessage({counter: msg.counter+1});
+	port.postMessage({});
     });
 });
 
@@ -84,13 +84,13 @@ function replace(pattern, title, enabled) {
 	    } else {
 		text = saves.shift();
 	    }
-	    $(this).fadeOut(400, function() {
+	    $(this).fadeOut(enabled ? 400 : 0, function() {
 		if (title) {
 		    setTimeout(function()  { if (document.title != text) { document.title = text; } }, 1000);
 		    $(document).attr('title', text);
 		}
 		$(this).text(text);
-		$(this).fadeIn();
+		$(this).fadeIn(enabled ? 400 : 0);
 	    });
 	    if (!enabled) {
 		used = [defaultText];
