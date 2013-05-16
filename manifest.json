@@ -5,6 +5,7 @@
     "version": "1.0",
 
     "permissions": [
+	"tabs",
 	"http://ngs.ru/",
 	"http://ngs24.ru/",
 	"http://news.ngs.ru/",
@@ -22,10 +23,21 @@
 	"http://www.she.ngs.ru/",
 	"http://www.business.ngs.ru/"
     ],
-	"icons": { "16": "byron-extension-16.png",
-           "48": "byron-extension-48.png",
-          "128": "byron-extension-128.png" },
-    "browser_action": {"default_icon": "byron-extension-19.png"},
+
+    "icons": {
+	"16": "byron-extension-16.png",
+	"48": "byron-extension-48.png",
+	"128": "byron-extension-128.png"
+    },
+
+    "page_action": {
+	"default_icon": "byron-extension-19.png",
+	"default_title" : "Лорд Байрон"
+    },
+
+    "background": {
+	"scripts": ["background.js"]
+    },
 
     "content_scripts": [
 	{
