@@ -26,37 +26,47 @@ function getPatternAndReplace(enabled) {
 	
 	var pattern;
 	var title = false;
+	var href = document.location.href;
 
 	// страница новости
-	if (document.location.href.match('/more/') && $("div.news_article_content > div > b").length > 0) {
+	if (href.match('/more/') && $("div.news_article_content > div > b").length > 0) {
 	    pattern = "div.news_article_content > h1";
 	    title = true;
 	}
 
 	// главная 
-	if (!pattern && jQuery.inArray(document.location.href, ['http://ngs.ru/', 'http://www.ngs.ru/', 'http://ngs24.ru/', 'http://www.ngs24.ru/']) > -1) {
+	if (!pattern && jQuery.inArray(href, ['http://ngs.ru/', 'http://www.ngs.ru/', 'http://ngs24.ru/', 'http://www.ngs24.ru/']) > -1) {
 	    pattern = "table.article h3 > a:not([class])";
 	}
 
 	// главная новостей
-	if (!pattern && jQuery.inArray(document.location.href, ['http://news.ngs.ru/', 'http://www.news.ngs.ru/', 'http://news.ngs24.ru/', 'http://www.news.ngs24.ru/']) > -1) {
+	if (!pattern && jQuery.inArray(href, ['http://news.ngs.ru/', 'http://www.news.ngs.ru/', 'http://news.ngs24.ru/', 'http://www.news.ngs24.ru/']) > -1) {
 	    pattern = ["div.day_block > a > h2", "div.other_articles > a > h2"];
 	}
 	
 	// список статей
-	if (!pattern && document.location.href.match('/articles')) {
+	if (!pattern && (href.match('/articles') || href.match('/(.*)/index.php$'))) {
 	    pattern = "td.home_article > h2 > a";
 	}
 	
 	// главные подпроектов
-	if (!pattern && document.location.href.match('.ngs.ru/$') && jQuery.inArray(document.location.href, ['http://news.ngs.ru/', 'http://www.ngs.ru/']) < 0) {
+	if (!pattern && href.match('.ngs.ru/$') && jQuery.inArray(href, ['http://news.ngs.ru/', 'http://www.ngs.ru/']) < 0) {
 	    pattern = "div.article > h1 > a";
 	}
 	
 	// статьи в подпроектах
-	if (!pattern && document.location.href.match('/more/')) {
+	if (!pattern && href.match('/more/')) {
 	    pattern = "div.article > h1";
 	    title = true;
+	}
+	if (!pattern && href.match('/article/')) {
+	    pattern = "div.header > h1:not([class])";
+	    title = true;
+	}
+	
+	console.log(pattern);
+	if (!pattern) {
+	    return;
 	}
 	
 	if( typeof pattern === 'string' ) {
@@ -72,7 +82,6 @@ var defaultText = "---no---";
 var saves = [];
 var used = [defaultText];
 
-// Replace matched elements and save source texts
 function replace(pattern, title, enabled) {
 	$(pattern).each(function() {
 	    if (enabled) {
@@ -99,7 +108,6 @@ function replace(pattern, title, enabled) {
 }
 
 
-// Google Analytics
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
