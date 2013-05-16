@@ -18,7 +18,7 @@ chrome.tabs.onUpdated.addListener(checkForValidUrl);
 chrome.pageAction.onClicked.addListener(function(tab) {
     enabled = !enabled;
     localStorage.enabled = enabled;
-    chrome.pageAction.setIcon({tabId: tab.id, path: 'byron-extension-19' + (enabled ? '' : '-disabled') + '.png'});
+    chrome.pageAction.setIcon({tabId: tab.id, path: 'images/byron-extension-19' + (enabled ? '' : '-disabled') + '.png'});
     chrome.tabs.sendRequest(tab.id, { enabled: enabled }, function handler(response) {
     });
 });
