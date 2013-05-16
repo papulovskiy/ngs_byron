@@ -27,6 +27,10 @@ function getPatternAndReplace(enabled) {
 	var pattern;
 	var title = false;
 	var href = document.location.href;
+	
+	if (!href.match('ngs.ru/')) {
+	    return;
+	}
 
 	// страница новости
 	if (href.match('/more/') && $("div.news_article_content > div > b").length > 0) {
@@ -66,12 +70,8 @@ function getPatternAndReplace(enabled) {
 	
 	console.log(pattern);
 	if (!pattern) {
-	    chrome.extension.sendMessage({command: 'disable'}, function(response) {
-	    });
 	    return;
 	}
-	chrome.extension.sendMessage({command: 'enable'}, function(response) {
-	});
 	
 	if( typeof pattern === 'string' ) {
 	    replace(pattern, title, enabled);
@@ -87,7 +87,10 @@ var saves = [];
 var used = [defaultText];
 
 function replace(pattern, title, enabled) {
+    var found = false;
 	$(pattern).each(function() {
+//	    console.log(this);
+	    found = true;
 	    if (enabled) {
 		saves.push($(this).text());
 		var text = defaultText;
@@ -109,6 +112,15 @@ function replace(pattern, title, enabled) {
 		used = [defaultText];
 	    }
 	});
+    if (found) {
+	informBackground('enable');
+    } else {
+	informBackground('disable');
+    }
+}
+
+function informBackground(command) {
+    chrome.extension.sendMessage({command: command}, function(response) {});
 }
 
 
