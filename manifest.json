@@ -6,6 +6,7 @@
 
     "permissions": [
 	"tabs",
+	"storage",
 	"http://ngs.ru/",
 	"http://ngs24.ru/",
 	"http://news.ngs.ru/",
