@@ -1,7 +1,8 @@
 {
     "manifest_version": 2,
-    "name": "Байрон",
-    "description": "This extension demonstrates a browser action with kittens.",
+    "name": "Байрон!",
+    "description": "Beautiful poetic lines of Romantic movement instead of platitudinous
+titles of Russian local news website NGS.RU",
     "version": "1.0",
 
     "permissions": [
@@ -26,14 +27,14 @@
     ],
 
     "icons": {
-	"16": "byron-extension-16.png",
-	"48": "byron-extension-48.png",
-	"128": "byron-extension-128.png"
+	"16": "images/byron-extension-16.png",
+	"48": "images/byron-extension-48.png",
+	"128": "images/byron-extension-128.png"
     },
 
     "page_action": {
-	"default_icon": "byron-extension-19.png",
-	"default_title" : "Лорд Байрон"
+	"default_icon": "images/byron-extension-19.png",
+	"default_title" : "Байрон!"
     },
 
     "background": {
