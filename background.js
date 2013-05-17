@@ -8,7 +8,7 @@ if (localStorage.enabled === false) {
 
 function checkForValidUrl(tabId, changeInfo, tab) {
     currTabId = tabId;
-    if (presence[tabId]) {
+    if (presences[tabId]) {
 	chrome.pageAction.show(tabId);
     }
 }
@@ -38,5 +38,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 	    chrome.pageAction.hide(currTabId);
 	    presence[currTabId] = false;
 	}
+	
         sendResponse({});
 });
