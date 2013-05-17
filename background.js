@@ -1,5 +1,5 @@
 var currTabId;
-var presence = false;
+var presences = {};
 
 var enabled = true;
 if (localStorage.enabled === false) {
@@ -8,7 +8,7 @@ if (localStorage.enabled === false) {
 
 function checkForValidUrl(tabId, changeInfo, tab) {
     currTabId = tabId;
-    if (presence) {
+    if (presence[tabId]) {
 	chrome.pageAction.show(tabId);
     }
 }
@@ -33,10 +33,10 @@ chrome.runtime.onConnect.addListener(function(port) {
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 	if (request.command == 'enable') {
 	    chrome.pageAction.show(currTabId);
-	    presence = true;
+	    presences[currTabId] = true;
 	} else if (request.command == 'disable') {
 	    chrome.pageAction.hide(currTabId);
-	    presence = false;
+	    presence[currTabId] = false;
 	}
         sendResponse({});
 });
