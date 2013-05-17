@@ -1,3 +1,7 @@
+var enabled = false;
+
+var way;
+
 var titles = [];
 var titlesCount = 0;
 
@@ -8,7 +12,24 @@ chrome.runtime.onConnect.addListener(function(port) {
 });
 
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-    getPatternAndReplace(request.enabled);
+    enabled = request.enabled;
+    if( typeof way.pattern === 'string' ) {
+	if (request.command == 'forward') {
+	    forward(way.pattern, way.title);
+	} else if (request.command == 'reward') {
+	    reward(way.pattern, way.title);
+	}
+    } else {
+	var sum = 0;
+	for (var i in way.pattern) {
+	    if (request.command == 'forward') {
+		forward(way.pattern[i], way.title);
+	    } else if (request.command == 'reward') {
+		reward(way.pattern[i], way.title);
+	    }
+	}
+    }
+
     sendResponse({enabled: request.enabled});
 });
 
@@ -16,14 +37,14 @@ $.get(chrome.extension.getURL('titles.txt'), function(data) {
     titles = data.split("\n");
     titlesCount = titles.length;
     $(document).ready(function() {
-	getPatternAndReplace();
+	way = getPattern();
+	var count = getCount(way);
+	chrome.extension.sendMessage({count: count}, function(response) {});
     });
 });
 
 
-function getPatternAndReplace(enabled) {
-	enabled = typeof enabled !== 'undefined' ? enabled : true;
-	
+function getPattern() {
 	var pattern;
 	var title = false;
 	var href = document.location.href;
@@ -68,57 +89,65 @@ function getPatternAndReplace(enabled) {
 	    title = true;
 	}
 	
-	console.log(pattern);
+	return {pattern: pattern, title: title};
 	if (!pattern) {
 	    return;
 	}
 	
 	if( typeof pattern === 'string' ) {
-	    replace(pattern, title, enabled);
+	    replace(pattern, title, forward);
 	} else {
 	    for (var i in pattern) {
-		replace(pattern[i], title, enabled);
+		replace(pattern[i], title, forward);
 	    }
 	}
+}
+
+function getCount(way) {
+    if( typeof way.pattern === 'string' ) {
+	return $(way.pattern).length;
+    } else {
+	var sum = 0;
+	for (var i in way.pattern) {
+	    sum += $(way.pattern[i]).length;
+	}
+	return sum;
+    }
 }
 
 var defaultText = "---no---";
 var saves = [];
 var used = [defaultText];
 
-function replace(pattern, title, enabled) {
-    var found = false;
-	$(pattern).each(function() {
-//	    console.log(this);
-	    found = true;
-	    if (enabled) {
-		saves.push($(this).text());
-		var text = defaultText;
-		while (jQuery.inArray(text, used) > -1) {
-		    text = titles[Math.floor(Math.random() * (titlesCount)) + 1];
-		}
-	    } else {
-		text = saves.shift();
+function forward(pattern, title) {
+    $(pattern).each(function() {
+	saves.push($(this).text());
+	var text = defaultText;
+	while (jQuery.inArray(text, used) > -1) {
+	    text = titles[Math.floor(Math.random() * (titlesCount)) + 1];
+	}
+	$(this).fadeOut(400, function() {
+	    if (title) {
+		setTimeout(function()  { if (document.title != text) { document.title = text; } }, 1000);
+		$(document).attr('title', text);
 	    }
-	    $(this).fadeOut(enabled ? 400 : 0, function() {
-		if (title) {
-		    setTimeout(function()  { if (document.title != text) { document.title = text; } }, 1000);
-		    $(document).attr('title', text);
-		}
-		$(this).text(text);
-		$(this).fadeIn(enabled ? 400 : 0);
-	    });
-	    if (!enabled) {
-		used = [defaultText];
-	    }
+	    $(this).text(text);
+	    $(this).fadeIn(400);
 	});
-    if (found) {
-	informBackground('enable');
-    } else {
-	informBackground('disable');
-    }
+    });
 }
 
-function informBackground(command) {
-    chrome.extension.sendMessage({command: command}, function(response) {});
+function reward(pattern, title) {
+    $(pattern).each(function() {
+	text = saves.shift();
+	if (!text) return;
+	$(this).fadeOut(0, function() {
+	    if (title) {
+		setTimeout(function()  { if (document.title != text) { document.title = text; } }, 1000);
+		$(document).attr('title', text);
+	    }
+	    $(this).text(text);
+	    $(this).fadeIn(0);
+	});
+    });
 }

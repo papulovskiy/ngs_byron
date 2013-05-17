@@ -1,10 +1,8 @@
 var currTabId;
 var presences = {};
 
-var enabled = true;
-if (localStorage.enabled === false) {
-    enabled = false;
-}
+var enabled = localStorage.enabled;
+var found = false;
 
 function checkForValidUrl(tabId, changeInfo, tab) {
     currTabId = tabId;
@@ -18,9 +16,7 @@ chrome.tabs.onUpdated.addListener(checkForValidUrl);
 chrome.pageAction.onClicked.addListener(function(tab) {
     enabled = !enabled;
     localStorage.enabled = enabled;
-    chrome.pageAction.setIcon({tabId: tab.id, path: 'images/byron-extension-19' + (enabled ? '' : '-disabled') + '.png'});
-    chrome.tabs.sendRequest(tab.id, { enabled: enabled }, function handler(response) {
-    });
+    makeDecision(tab.id);
 });
 
 
@@ -31,13 +27,35 @@ chrome.runtime.onConnect.addListener(function(port) {
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-	if (request.command == 'enable') {
-	    chrome.pageAction.show(currTabId);
-	    presences[currTabId] = true;
-	} else if (request.command == 'disable') {
-	    chrome.pageAction.hide(currTabId);
-	    presence[currTabId] = false;
+	var tabId = sender.tab.id;
+	
+	if (request.count > 0) {
+	    chrome.pageAction.show(tabId);
+	    presences[tabId] = true;
+	    found = true;
+	} else if (request.found == 0) {
+	    chrome.pageAction.hide(tabId);
+	    presences[tabId] = false;
+	    found = false;
 	}
 	
-        sendResponse({});
+        makeDecision(tabId);
+        sendResponse({enabled: enabled});
 });
+
+function makeDecision(tabId) {
+    if (enabled) {
+	send(tabId, 'forward');
+    } else {
+	send(tabId, 'reward');
+    }
+    updateIcon(tabId);
+}
+
+function send(tabId, command) {
+    chrome.tabs.sendRequest(tabId, {command: command}, function handler(response) {});
+}
+
+function updateIcon(tabId) {
+    chrome.pageAction.setIcon({tabId: tabId, path: 'images/byron-extension-19' + (enabled ? '' : '-disabled') + '.png'});
+}
