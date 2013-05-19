@@ -1,6 +1,11 @@
 var currTabId;
 var presences = {};
 
+if (!localStorage.version) {
+    localStorage.enabled = true;
+    var v = chrome.app.getDetails().version;
+    localStorage.version = v;
+}
 var enabled = localStorage.enabled;
 var found = false;
 
