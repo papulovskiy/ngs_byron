@@ -1,9 +1,8 @@
 {
     "manifest_version": 2,
     "name": "Байрон!",
-    "description": "Beautiful poetic lines of Romantic movement instead of platitudinous
-titles of Russian local news website NGS.RU",
-    "version": "1.0.2",
+    "description": "Расширение для браузера Google Chrome, которое меняет заголовки статей НГС на строки из стихотворений поэтов эпохи романтизма. После установки «Байрона!» бессмертные творения Байрона, Киттса, Шелли, Лермонтова, Жуковского, Батюшкова поселяют гармонию в сердце читателя НГС.",
+    "version": "1.0.3",
 
     "permissions": [
 	"storage",
