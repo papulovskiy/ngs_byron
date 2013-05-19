@@ -76,7 +76,7 @@ function getPattern() {
 	
 	// главные подпроектов
 	if (!pattern && href.match('.ngs.ru/$') && jQuery.inArray(href, ['http://news.ngs.ru/', 'http://www.ngs.ru/']) < 0) {
-	    pattern = "div.article > h1 > a";
+	    pattern = ["div.article > h1 > a", "div.tit > a", "div.post_block > h2 > a", "div.news_section > h1 > a", "div.newslistom_inner > a > strong"];
 	}
 	
 	// статьи в подпроектах
