@@ -6,7 +6,6 @@ titles of Russian local news website NGS.RU",
     "version": "1.0",
 
     "permissions": [
-//	"tabs",
 	"storage",
 	"http://ngs.ru/",
 	"http://ngs24.ru/",
