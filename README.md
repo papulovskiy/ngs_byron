@@ -28,6 +28,6 @@
 
 --------
 Авторы:
-[Николай Гурьянов](http://nick123.ru)
+[Николай Гурьянов](http://nick123.ru),
 [Алексей Папуловский](http://ru.linkedin.com/in/papulovskiy/)
 
