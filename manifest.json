@@ -3,7 +3,7 @@
     "name": "Байрон!",
     "description": "Beautiful poetic lines of Romantic movement instead of platitudinous
 titles of Russian local news website NGS.RU",
-    "version": "1.0",
+    "version": "1.0.2",
 
     "permissions": [
 	"storage",

@@ -33,7 +33,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 	    chrome.pageAction.show(tabId);
 	    presences[tabId] = true;
 	    found = true;
-	} else if (request.found == 0) {
+	} else if (request.count == 0) {
 	    chrome.pageAction.hide(tabId);
 	    presences[tabId] = false;
 	    found = false;
