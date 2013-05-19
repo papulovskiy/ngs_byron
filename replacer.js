@@ -81,7 +81,7 @@ function getPattern() {
 	
 	// статьи в подпроектах
 	if (!pattern && href.match('/more/')) {
-	    pattern = "div.article > h1";
+	    pattern = ["div.article > h1", "div.article_announc > h1"];
 	    title = true;
 	}
 	if (!pattern && href.match('/article/')) {
